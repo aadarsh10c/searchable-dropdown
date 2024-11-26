@@ -1,34 +1,25 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 
-const defaultOptionList = [
-  "Option 1",
-  "Option 2",
-  "Option 3",
-  "Option 4",
-  "Option 5",
-  "Option 6",
-  "Option 7",
-  "Option 8",
-  "Option 9",
-  "Option 10",
-  "Option 11",
-  "Option 12",
-  "Option 13",
-  "Option 14",
-  "Option 15",
-  "Option 16",
-  "Option 17",
-  "Option 18",
-  "Option 19",
-  "Option 20",
-];
-export default function Searchabledropdown() {
-  const [answer, setAnswer] = useState("");
+
+export default function Searchabledropdown({ defaultOptionList, selectedValue, selectedValFn}) {
   const [optionList, setOptionList] = useState(defaultOptionList);
   const [filteredList, setFilteredList] = useState(optionList);
   const [displayDropdown, setDisplayDropdown] = useState(false);
   const inputRef = useRef(null);
+  const dropdownRef = useRef(null)
+
+  function handleClickOutside(event){
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDisplayDropdown(false);
+    }
+  }
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  },[])
 
   function handleFilter(val) {
     if (val == "") {
@@ -45,7 +36,7 @@ export default function Searchabledropdown() {
   function handleAnswer(e) {
     let value = e.target.value;
     e.preventDefault();
-    setAnswer(value);
+    selectedValFn(value);
     handleFilter(value);
   }
 
@@ -55,16 +46,16 @@ export default function Searchabledropdown() {
     setDisplayDropdown(true);
   }
   return (
-    <div className="search-box">
+    <div className="search-box"  ref={dropdownRef}>
       <div className="search-box_input">
         <input
           ref={inputRef}
           type="text"
           className="search-box_input-text"
           placeholder="by cotnract name"
-          value={answer}
+          value={selectedValue}
           onFocus={setDropDownValues}
-          onBlur={() => setDisplayDropdown(false)}
+          // onBlur={() => setDisplayDropdown(false)}
           onChange={(e) => handleAnswer(e)}
         />
         <span onClick={() => inputRef.current.focus()}>
@@ -72,22 +63,24 @@ export default function Searchabledropdown() {
         </span>
       </div>
       {displayDropdown && (
-        <Dropdown setAnswerFn={setAnswer} optionList={filteredList} />
+        <Dropdown setAnswerFn={selectedValFn} setDisplayDropdownFn={setDisplayDropdown} optionList={filteredList} />
       )}
     </div>
   );
 }
 
-function Dropdown({ setAnswerFn, optionList }) {
+function Dropdown({ setAnswerFn,setDisplayDropdownFn, optionList }) {
   function handleOnClick(e, text) {
     e.preventDefault();
-    console.log("Clicked");
     setAnswerFn(text);
+    setDisplayDropdownFn(false)
   }
 
   function renderOptionList(option) {
     return (
-      <li key={option} onClick={(e) => handleOnClick(e, option)}>
+      <li key={option} 
+        onClick={(e) => handleOnClick(e, option)}
+      >
         {option}
       </li>
     );
