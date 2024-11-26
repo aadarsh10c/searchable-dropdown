@@ -1,0 +1,53 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.search-box {
+  display: inline-block;
+  border: 4px solid pink;
+}
+.search-box_input {
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  transition: outline 0.3s ease;
+}
+
+.search-box_input-text {
+  border: none;
+  outline: none;
+  padding: 0 0.5rem;
+}
+.search-box_input:focus-within {
+  outline: 3px solid rgb(36, 220, 36);
+  border: none;
+}
+
+.search-box_input-icon {
+  font-size: 20px;
+  cursor: text;
+}
+.search-box_dropdown {
+  border: 1px solid black;
+}
+.search-box_dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  max-height: 40vh;
+  scrollbar-color: hotpink lightgray;
+  scroll-behavior: smooth;
+  /* border: 2px solid red; */
+}
+.search-box_dropdown ul li {
+  border-bottom: 1px solid black;
+  text-align: center;
+  padding: 0.2rem;
+  cursor: pointer;
+}
+
+.search-box_dropdown ul li:hover {
+  background-color: lightgray;
+}
