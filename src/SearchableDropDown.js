@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 
 
-export default function Searchabledropdown({ defaultOptionList, selectedValue, selectedValFn}) {
+export default function Searchabledropdown({ defaultOptionList=["No options given"], selectedValue, selectedValFn, placeholder="Need Placeholder"}) {
   const [optionList, setOptionList] = useState(defaultOptionList);
   const [filteredList, setFilteredList] = useState(optionList);
   const [displayDropdown, setDisplayDropdown] = useState(false);
@@ -52,10 +52,9 @@ export default function Searchabledropdown({ defaultOptionList, selectedValue, s
           ref={inputRef}
           type="text"
           className="search-box_input-text"
-          placeholder="by cotnract name"
+          placeholder={placeholder}
           value={selectedValue}
           onFocus={setDropDownValues}
-          // onBlur={() => setDisplayDropdown(false)}
           onChange={(e) => handleAnswer(e)}
         />
         <span onClick={() => inputRef.current.focus()}>

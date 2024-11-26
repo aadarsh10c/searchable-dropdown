@@ -38,7 +38,6 @@
   max-height: 40vh;
   scrollbar-color: hotpink lightgray;
   scroll-behavior: smooth;
-  /* border: 2px solid red; */
 }
 .search-box_dropdown ul li {
   border-bottom: 1px solid black;

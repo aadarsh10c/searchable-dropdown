@@ -34,6 +34,7 @@ export default function App() {
       defaultOptionList={defaultOptionList} 
       selectedValue={displayVal}
       selectedValFn={setdisplayVal}
+      placeholder={"by contract name"}
       />
       <h1>Selected Val: {displayVal}</h1>
     </div>
